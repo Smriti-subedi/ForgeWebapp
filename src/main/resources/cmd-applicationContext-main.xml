@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
-<beans default-lazy-init="true" default-autowire="no">
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   					   http://www.springframework.org/schema/beans/spring-beans.xsd"
+  default-lazy-init="true" default-autowire="no">
   <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="order">
       <value>2</value>
@@ -33,13 +35,13 @@
       <value>true</value>
     </property>
   </bean>
-  <bean id="configXml" class="org.projectforge.core.ConfigXml" singleton="true">
+  <bean id="configXml" class="org.projectforge.core.ConfigXml" scope="singleton">
     <constructor-arg>
       <value>${base.dir}</value>
     </constructor-arg>
   </bean>
   <!-- hibernate Session to DB -->
-  <bean id="sessionFactory" class="org.projectforge.database.AutoSessionFactoryBean">
+  <bean id="sessionFactory" class="org.projectforge.database.PersistenceConfig">
     <!--property name="mappingResources"> <value>${hibernate.mappings}</value> </property -->
     <!-- property name="initialXmlData"> <value>classpath:database-dump.xml</value> </property -->
     <!-- property name="dumpOnExit"> <value>false</value> </property -->

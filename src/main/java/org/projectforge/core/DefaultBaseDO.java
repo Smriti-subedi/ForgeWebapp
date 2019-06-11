@@ -28,9 +28,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Store;
 import org.projectforge.lucene.ClassicAnalyzer;
 
@@ -45,7 +45,7 @@ public class DefaultBaseDO extends AbstractHistorizableBaseDO<Integer>
   private static final long serialVersionUID = 659687830219996653L;
 
   @PropertyInfo(i18nKey = "id")
-  @Field(index = Index.UN_TOKENIZED, store = Store.NO)
+  @Field(analyze = Analyze.NO, store = Store.NO)
   private Integer id;
 
   @Id

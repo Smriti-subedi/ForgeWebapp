@@ -21,21 +21,11 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-package org.projectforge.user;
+package org.projectforge.lucene;
 
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.apache.lucene.util.Version;
 
-/**
- * 
- * @author Kai Reinhard (k.reinhard@micromata.de)
- *
- */
-public class UserGroupDao extends HibernateDaoSupport
+public final class LuceneVersionDef
 {
-  //private static final Logger log = Logger.getLogger(UserGroupDao.class);
-  
-  @Override
-  protected void initDao()
-  {
-  }
+  public static final Version CURRENT_VERSION =  Version.LUCENE_36;
 }

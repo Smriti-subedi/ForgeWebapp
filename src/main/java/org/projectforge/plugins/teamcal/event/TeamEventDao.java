@@ -125,19 +125,19 @@ public class TeamEventDao extends BaseDao<TeamEventDO>
     if (teamCalId != null) {
       if (id != null) {
         // The uid refers an own event, therefore search for the extracted id.
-        list = getHibernateTemplate().find("from TeamEventDO e where e.id=? and e.calendar.id=? and e.deleted=false", id, teamCalId);
+        list = (List<TeamEventDO>)getHibernateTemplate().find("from TeamEventDO e where e.id=? and e.calendar.id=? and e.deleted=false", id, teamCalId);
       } else {
         // It's an external event:
-        list = getHibernateTemplate().find("from TeamEventDO e where e.externalUid=? and e.calendar.id=? and e.deleted=false", uid,
+        list = (List<TeamEventDO>)getHibernateTemplate().find("from TeamEventDO e where e.externalUid=? and e.calendar.id=? and e.deleted=false", uid,
             teamCalId);
       }
     } else {
       if (id != null) {
         // The uid refers an own event, therefore search for the extracted id.
-        list = getHibernateTemplate().find("from TeamEventDO e where e.id=? and e.deleted=false", id);
+        list = (List<TeamEventDO>)getHibernateTemplate().find("from TeamEventDO e where e.id=? and e.deleted=false", id);
       } else {
         // It's an external event:
-        list = getHibernateTemplate().find("from TeamEventDO e where e.externalUid=? and e.deleted=false", uid);
+        list = (List<TeamEventDO>)getHibernateTemplate().find("from TeamEventDO e where e.externalUid=? and e.deleted=false", uid);
       }
     }
     if (list != null && list.isEmpty() == false && list.get(0) != null) {
@@ -312,7 +312,7 @@ public class TeamEventDao extends BaseDao<TeamEventDO>
     final String s = "select distinct location from "
         + clazz.getSimpleName()
         + " t where deleted=false and t.calendar in :cals and lastUpdate > :lastUpdate and lower(t.location) like :location) order by t.location";
-    final Query query = getSession().createQuery(s);
+    final Query query = getSessionFactory().getCurrentSession().createQuery(s);
     query.setParameterList("cals", calendars);
     final DateHolder dh = new DateHolder();
     dh.add(Calendar.YEAR, -1);

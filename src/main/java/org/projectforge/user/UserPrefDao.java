@@ -94,7 +94,7 @@ public class UserPrefDao extends BaseDao<UserPrefDO>
   {
     final PFUserDO user = PFUserContext.getUser();
     @SuppressWarnings("unchecked")
-    final List<Object> list = getSession().createQuery("select name from UserPrefDO t where user_fk=? and areaString = ? order by name")
+    final List<Object> list = getSessionFactory().getCurrentSession().createQuery("select name from UserPrefDO t where user_fk=? and areaString = ? order by name")
     .setInteger(0, user.getId()).setParameter(1, area.getId()).list();
     final String[] result = new String[list.size()];
     int i = 0;
@@ -120,10 +120,11 @@ public class UserPrefDao extends BaseDao<UserPrefDO>
     Validate.notNull(name);
     final List<UserPrefDO> list;
     if (id != null) {
-      list = getHibernateTemplate().find("from UserPrefDO u where pk <> ? and u.user.id = ? and areaString = ? and name = ?",
+      list = (List<UserPrefDO>) getHibernateTemplate().find(
+          "from UserPrefDO u where pk <> ? and u.user.id = ? and areaString = ? and name = ?",
           new Object[] { id, user.getId(), area.getId(), name});
     } else {
-      list = getHibernateTemplate().find("from UserPrefDO u where u.user.id = ? and areaString = ? and name = ?",
+      list = (List<UserPrefDO>) getHibernateTemplate().find("from UserPrefDO u where u.user.id = ? and areaString = ? and name = ?",
           new Object[] { user.getId(), area.getId(), name});
     }
     if (CollectionUtils.isNotEmpty(list) == true) {
@@ -150,8 +151,8 @@ public class UserPrefDao extends BaseDao<UserPrefDO>
   {
     final PFUserDO user = PFUserContext.getUser();
     @SuppressWarnings("unchecked")
-    final List<UserPrefDO> list = getHibernateTemplate().find("from UserPrefDO u where u.user.id = ? and u.areaString = ? and u.name = ?",
-        new Object[] { user.getId(), area.getId(), name});
+    final List<UserPrefDO> list = (List<UserPrefDO>) getHibernateTemplate().find(
+        "from UserPrefDO u where u.user.id = ? and u.areaString = ? and u.name = ?", new Object[] { user.getId(), area.getId(), name});
     if (list == null || list.size() != 1) {
       return null;
     }
@@ -162,8 +163,8 @@ public class UserPrefDao extends BaseDao<UserPrefDO>
   {
     final PFUserDO user = PFUserContext.getUser();
     @SuppressWarnings("unchecked")
-    final List<UserPrefDO> list = getHibernateTemplate().find("from UserPrefDO u where u.user.id = ? and u.areaString = ?",
-        new Object[] { user.getId(), area.getId()});
+    final List<UserPrefDO> list = (List<UserPrefDO>) getHibernateTemplate().find(
+        "from UserPrefDO u where u.user.id = ? and u.areaString = ?", new Object[] { user.getId(), area.getId()});
     return selectUnique(list);
   }
 

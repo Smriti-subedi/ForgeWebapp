@@ -42,7 +42,7 @@ import org.projectforge.web.scripting.RecentScriptCalls;
 import org.projectforge.web.scripting.ScriptCallData;
 import org.projectforge.xstream.JodaDateMidnightConverter;
 import org.projectforge.xstream.JodaDateTimeConverter;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -125,8 +125,8 @@ public class UserXmlPreferencesDao extends HibernateDaoSupport
       checkAccess(userId);
     }
     @SuppressWarnings("unchecked")
-    final List<UserXmlPreferencesDO> list = getHibernateTemplate().find("from UserXmlPreferencesDO u where u.user.id = ? and u.key = ?",
-        new Object[] { userId, key});
+    final List<UserXmlPreferencesDO> list = (List<UserXmlPreferencesDO>) getHibernateTemplate().find(
+        "from UserXmlPreferencesDO u where u.user.id = ? and u.key = ?", new Object[] { userId, key});
     Validate.isTrue(list.size() <= 1);
     if (list.size() == 1) {
       return list.get(0);
@@ -143,7 +143,8 @@ public class UserXmlPreferencesDao extends HibernateDaoSupport
   {
     checkAccess(userId);
     @SuppressWarnings("unchecked")
-    final List<UserXmlPreferencesDO> list = getHibernateTemplate().find("from UserXmlPreferencesDO u where u.user.id = ?", userId);
+    final List<UserXmlPreferencesDO> list = (List<UserXmlPreferencesDO>) getHibernateTemplate().find(
+        "from UserXmlPreferencesDO u where u.user.id = ?", userId);
     return list;
   }
 

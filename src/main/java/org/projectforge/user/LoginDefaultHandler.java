@@ -38,7 +38,7 @@ import org.projectforge.web.UserFilter;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.orm.hibernate4.HibernateTemplate;
 
 public class LoginDefaultHandler implements LoginHandler
 {
@@ -150,7 +150,7 @@ public class LoginDefaultHandler implements LoginHandler
   private PFUserDO loadUser(final JdbcTemplate jdbc, final String sql, final String username, final boolean withSaltString)
       throws SQLException
       {
-    final PFUserDO user = (PFUserDO)jdbc.query(sql, new Object[] { username}, new ResultSetExtractor() {
+    final PFUserDO user = (PFUserDO) jdbc.query(sql, new Object[] { username}, new ResultSetExtractor() {
       @Override
       public Object extractData(final ResultSet rs) throws SQLException, DataAccessException
       {
@@ -214,7 +214,7 @@ public class LoginDefaultHandler implements LoginHandler
   public List<GroupDO> getAllGroups()
   {
     try {
-      List<GroupDO> list = hibernateTemplate.find("from GroupDO t");
+      List<GroupDO> list = (List<GroupDO>) hibernateTemplate.find("from GroupDO t");
       if (list != null) {
         list = (List<GroupDO>) selectUnique(list);
       }
@@ -235,10 +235,10 @@ public class LoginDefaultHandler implements LoginHandler
   public List<PFUserDO> getAllUsers()
   {
     try {
-      return hibernateTemplate.find("from PFUserDO t");
+      return (List<PFUserDO>) hibernateTemplate.find("from PFUserDO t");
     } catch (final Exception ex) {
-      log.fatal("******* Exception while getting users from data-base (OK only in case of migration from older versions): "
-          + ex.getMessage(), ex);
+      log.fatal(
+          "******* Exception while getting users from data-base (OK only in case of migration from older versions): " + ex.getMessage(), ex);
       return new ArrayList<PFUserDO>();
     }
   }
