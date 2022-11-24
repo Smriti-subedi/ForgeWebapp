@@ -306,7 +306,7 @@
       <!-- see: http://repository.jboss.org/nexus/content/groups/public/org/hibernate/hibernate-core/ -->
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
-      <version>3.6.10.Final</version>
+      <version>5.3.20.Final</version>
     </dependency>
     <!-- dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-ehcache</artifactId> <version>4.1.7.Final</version> </dependency -->
     <dependency>
